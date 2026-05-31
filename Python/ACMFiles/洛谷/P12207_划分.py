@@ -1,7 +1,7 @@
 import sys
 # lines = sys.stdin.readlines()
 # 在数组中选择x个数，使得x(_sum-x)的值最大，进一步推理abs(x-_sum//2)越大
-lines = sys.stdin.read().splitlines()		# 消除换行符
+lines = sys.stdin.read().splitlines()		
 _list=[]
 for l in lines:
   _list.extend(map(int,l.split()))

@@ -1,4 +1,4 @@
-def test01():
+def test01():       # A数
     _str=''
     for i in range(1,2024):
         _str=_str+str(i)
@@ -32,7 +32,7 @@ def E_sieve(n):
 
 import math
 
-def test02():
+def test02():       # B数
     # print(int(23333333333333**0.5))       # 4830458
     primes = E_sieve(4830458)
 
