@@ -1,9 +1,11 @@
-# a,b,c=input()
-# print(a,b,c,type(a))
+# from random import *
+# num = randint(1, 100)
+# print(num)
 
-# _list=list(map(int,input()))
-# print(_list)
+edge=[]
 
-_list=[0,1,2,3]
-_list.insert(1,9)
-print(*_list)
+edge.append(('a','b',1))
+edge.append(('a','c',5))
+
+print(*edge[0])
+print(edge[0][0],edge[0][1],edge[0][2])
