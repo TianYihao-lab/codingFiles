@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>非法侵入计算机信息系统 — 相关罪名合规分析 与 案例研究</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+SC:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{
+  font-family:'Noto Sans SC','Inter',-apple-system,sans-serif;
+  background:#f7f8fc;
+  color:#1a202c;
+  line-height:1.7;
+  overflow-x:hidden;
+}
+
+:root{
+  --blue:#2563eb;--blue-light:#eff6ff;--blue-dark:#1d4ed8;
+  --green:#059669;--green-light:#ecfdf5;--green-dark:#047857;
+  --red:#dc2626;  --red-light:#fef2f2;  --red-dark:#b91c1c;
+  --amber:#d97706;--amber-light:#fffbeb;--amber-dark:#b45309;
+  --slate-50:#f8fafc;--slate-100:#f1f5f9;--slate-200:#e2e8f0;
+  --slate-300:#cbd5e1;--slate-400:#94a3b8;--slate-500:#64748b;
+  --slate-600:#475569;--slate-700:#334155;--slate-800:#1e293b;--slate-900:#0f172a;
+  --shadow-sm:0 1px 2px rgba(0,0,0,0.05);
+  --shadow:0 1px 3px rgba(0,0,0,0.1),0 1px 2px rgba(0,0,0,0.06);
+  --shadow-md:0 4px 6px rgba(0,0,0,0.07),0 2px 4px rgba(0,0,0,0.06);
+  --shadow-lg:0 10px 15px rgba(0,0,0,0.1),0 4px 6px rgba(0,0,0,0.05);
+  --shadow-xl:0 20px 25px rgba(0,0,0,0.1),0 8px 10px rgba(0,0,0,0.05);
+  --radius:12px;--radius-lg:20px;--radius-xl:28px;
+}
+
+/* ---- SCROLL ANIMATIONS ---- */
+.fade-up{
+  opacity:0;transform:translateY(40px);
+  transition:opacity 0.7s ease,transform 0.7s ease;
+}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+.fade-left{
+  opacity:0;transform:translateX(-40px);
+  transition:opacity 0.7s ease,transform 0.7s ease;
+}
+.fade-left.visible{opacity:1;transform:translateX(0)}
+.fade-right{
+  opacity:0;transform:translateX(40px);
+  transition:opacity 0.7s ease,transform 0.7s ease;
+}
+.fade-right.visible{opacity:1;transform:translateX(0)}
+.scale-in{
+  opacity:0;transform:scale(0.9);
+  transition:opacity 0.6s ease,transform 0.6s ease;
+}
+.scale-in.visible{opacity:1;transform:scale(1)}
+.delay-1{transition-delay:0.1s}.delay-2{transition-delay:0.2s}
+.delay-3{transition-delay:0.3s}.delay-4{transition-delay:0.4s}
+.delay-5{transition-delay:0.5s}
+
+/* ---- TOP NAV ---- */
+.top-nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(255,255,255,0.85);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--slate-200);
+  padding:0 48px;height:56px;
+  display:flex;align-items:center;justify-content:space-between;
+  font-size:0.875rem;
+}
+.top-nav .logo{font-weight:700;color:var(--slate-800);font-size:0.95rem;display:flex;align-items:center;gap:8px}
+.top-nav .logo span{background:var(--blue);color:#fff;padding:2px 10px;border-radius:6px;font-size:0.75rem}
+.top-nav .nav-links{display:flex;gap:28px;list-style:none}
+.top-nav .nav-links a{
+  text-decoration:none;color:var(--slate-500);font-weight:500;
+  transition:color 0.2s;font-size:0.85rem;
+}
+.top-nav .nav-links a:hover,.top-nav .nav-links a.active{color:var(--blue)}
+
+/* ---- SIDE DOTS ---- */
+.side-dots{
+  position:fixed;right:24px;top:50%;transform:translateY(-50%);z-index:99;
+  display:flex;flex-direction:column;gap:12px;
+}
+.side-dots a{
+  width:10px;height:10px;border-radius:50%;background:var(--slate-300);
+  transition:all 0.3s;display:block;
+}
+.side-dots a.active,.side-dots a:hover{background:var(--blue);transform:scale(1.4)}
+
+/* ---- SECTION ---- */
+.section{
+  max-width:1100px;margin:0 auto;
+  padding:100px 48px;
+}
+.section-header{
+  text-align:center;margin-bottom:64px;
+}
+.section-header .tag{
+  display:inline-block;padding:6px 20px;
+  border-radius:20px;font-size:0.8rem;font-weight:600;
+  letter-spacing:1px;margin-bottom:16px;
+}
+.section-header h2{font-size:2.2rem;font-weight:800;color:var(--slate-900);margin-bottom:12px}
+.section-header p{font-size:1.05rem;color:var(--slate-500);max-width:640px;margin:0 auto;line-height:1.8}
+
+/* ---- HERO ---- */
+.hero{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  text-align:center;padding:120px 48px 80px;
+  position:relative;overflow:hidden;
+  background:linear-gradient(180deg,#fff 0%,#f0f4ff 100%);
+}
+.hero::before{
+  content:'';position:absolute;
+  top:-200px;right:-200px;width:600px;height:600px;
+  background:radial-gradient(circle,rgba(37,99,235,0.06) 0%,transparent 70%);
+  border-radius:50%;
+}
+.hero::after{
+  content:'';position:absolute;
+  bottom:-100px;left:-100px;width:400px;height:400px;
+  background:radial-gradient(circle,rgba(5,150,105,0.05) 0%,transparent 70%);
+  border-radius:50%;
+}
+.hero-content{position:relative;z-index:2}
+.hero h1{
+  font-size:3.2rem;font-weight:900;color:var(--slate-900);
+  line-height:1.3;max-width:800px;margin:0 auto 16px;
+}
+.hero h1 .accent{color:var(--blue);position:relative}
+.hero h1 .accent::after{
+  content:'';position:absolute;bottom:4px;left:0;right:0;
+  height:10px;background:rgba(37,99,235,0.15);border-radius:4px;
+}
+.hero .hero-sub{font-size:1.2rem;color:var(--slate-500);margin-bottom:12px;font-weight:400}
+.hero .hero-badge{
+  display:inline-block;padding:8px 28px;
+  border:2px solid var(--slate-200);border-radius:30px;
+  font-size:0.85rem;color:var(--slate-500);letter-spacing:2px;
+  margin-bottom:32px;
+}
+.hero .hero-info{font-size:0.9rem;color:var(--slate-400);margin-top:8px}
+.hero .scroll-hint{
+  position:absolute;bottom:32px;left:50%;transform:translateX(-50%);
+  color:var(--slate-300);font-size:0.75rem;
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+  animation:bounce 2s infinite;
+}
+@keyframes bounce{
+  0%,100%{transform:translateX(-50%) translateY(0)}
+  50%{transform:translateX(-50%) translateY(8px)}
+}
+.scroll-hint .arrow{font-size:1.2rem}
+
+/* ---- CARDS ---- */
+.card{
+  background:#fff;border-radius:var(--radius-lg);
+  padding:32px;
+  border:1px solid var(--slate-200);
+  box-shadow:var(--shadow-sm);
+  transition:all 0.3s ease;
+}
+.card:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px)}
+.card.accent-blue{border-left:5px solid var(--blue)}
+.card.accent-green{border-left:5px solid var(--green)}
+.card.accent-red{border-left:5px solid var(--red)}
+.card.accent-amber{border-left:5px solid var(--amber)}
+.card h3{font-size:1.15rem;font-weight:700;color:var(--slate-800);margin-bottom:8px}
+.card p{font-size:0.9rem;color:var(--slate-500);line-height:1.75}
+.card .card-icon{
+  display:inline-flex;width:48px;height:48px;border-radius:12px;
+  align-items:center;justify-content:center;font-size:22px;
+  margin-bottom:14px;
+}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px}
+.grid4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:20px}
+
+/* ---- STAT COUNTERS ---- */
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.stat-card{
+  background:#fff;border-radius:var(--radius-lg);padding:36px 24px;
+  text-align:center;border:1px solid var(--slate-200);
+  box-shadow:var(--shadow-sm);
+  transition:all 0.3s ease;
+  position:relative;overflow:hidden;
+}
+.stat-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-4px)}
+.stat-card .stat-num{
+  font-size:3rem;font-weight:900;color:var(--slate-900);
+  display:block;line-height:1;
+}
+.stat-card .stat-unit{font-size:1.2rem;font-weight:600;color:var(--slate-400)}
+.stat-card .stat-label{display:block;font-size:0.85rem;color:var(--slate-500);margin-top:8px}
+.stat-card.red .stat-num{color:var(--red)}
+.stat-card.amber .stat-num{color:var(--amber)}
+.stat-card.green .stat-num{color:var(--green)}
+.stat-card.blue .stat-num{color:var(--blue)}
+.stat-card .stat-bg{
+  position:absolute;top:-30px;right:-30px;
+  font-size:6rem;font-weight:900;opacity:0.04;
+  line-height:1;
+}
+
+/* ---- FLOW ---- */
+.flow{
+  display:flex;align-items:center;justify-content:center;gap:16px;
+  flex-wrap:wrap;
+}
+.flow-step{
+  background:#fff;border-radius:var(--radius);
+  padding:20px 28px;text-align:center;
+  border:1px solid var(--slate-200);
+  box-shadow:var(--shadow-sm);
+  flex:1;min-width:160px;max-width:220px;
+  transition:all 0.3s ease;
+}
+.flow-step:hover{box-shadow:var(--shadow-md);transform:translateY(-3px)}
+.flow-step .step-num{
+  font-size:0.7rem;color:var(--blue);font-weight:700;letter-spacing:2px;
+  margin-bottom:4px;
+}
+.flow-step .step-title{font-weight:700;color:var(--slate-800)}
+.flow-step .step-sub{font-size:0.78rem;color:var(--slate-400);margin-top:2px}
+.flow-arrow{font-size:1.6rem;color:var(--slate-300);flex-shrink:0}
+
+/* ---- TAB SYSTEM ---- */
+.tab-nav{
+  display:flex;gap:0;border-bottom:2px solid var(--slate-200);margin-bottom:0;
+}
+.tab-btn{
+  padding:14px 28px;border:none;background:none;
+  font-size:0.95rem;font-weight:600;color:var(--slate-400);
+  cursor:pointer;border-bottom:3px solid transparent;
+  margin-bottom:-2px;
+  transition:all 0.3s;font-family:inherit;
+}
+.tab-btn:hover{color:var(--slate-700)}
+.tab-btn.active{color:var(--blue);border-bottom-color:var(--blue)}
+.tab-panel{display:none;padding:32px 0 0;animation:fadeIn 0.4s ease}
+.tab-panel.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* ---- TIMELINE INTERACTIVE ---- */
+.timeline-interactive{
+  position:relative;padding:0;
+}
+.timeline-track{
+  position:absolute;left:28px;top:0;bottom:0;
+  width:3px;background:var(--slate-200);border-radius:2px;
+}
+.timeline-node{
+  position:relative;padding-left:72px;margin-bottom:24px;
+  cursor:pointer;
+}
+.timeline-node::before{
+  content:'';position:absolute;left:22px;top:8px;
+  width:15px;height:15px;border-radius:50%;
+  background:#fff;border:3px solid var(--slate-300);
+  z-index:1;transition:all 0.3s;
+}
+.timeline-node.active::before,.timeline-node:hover::before{
+  background:var(--blue);border-color:var(--blue);box-shadow:0 0 0 6px rgba(37,99,235,0.15);
+}
+.timeline-node .tn-header{
+  display:flex;align-items:center;gap:12px;margin-bottom:4px;
+}
+.timeline-node .tn-badge{
+  font-size:0.7rem;font-weight:700;color:#fff;background:var(--blue);
+  padding:3px 12px;border-radius:10px;
+}
+.timeline-node .tn-title{font-weight:700;color:var(--slate-800);font-size:1.05rem}
+.timeline-node .tn-body{
+  max-height:0;overflow:hidden;
+  transition:max-height 0.4s ease,margin 0.4s ease;
+  color:var(--slate-500);font-size:0.88rem;line-height:1.75;
+}
+.timeline-node.active .tn-body{max-height:300px;margin-top:10px}
+.timeline-node .tn-dot{
+  display:inline-block;width:8px;height:8px;border-radius:50%;
+  margin-right:6px;
+}
+.tn-dot.green{background:var(--green)}
+.tn-dot.red{background:var(--red)}
+.tn-dot.amber{background:var(--amber)}
+
+/* ---- ACCORDION ---- */
+.accordion{margin:8px 0}
+.accordion-header{
+  background:#fff;border:1px solid var(--slate-200);
+  border-radius:var(--radius);padding:16px 24px;
+  width:100%;text-align:left;cursor:pointer;
+  font-size:0.95rem;font-weight:600;color:var(--slate-700);
+  display:flex;align-items:center;justify-content:space-between;
+  transition:all 0.3s;font-family:inherit;
+}
+.accordion-header:hover{background:var(--slate-50);border-color:var(--slate-300)}
+.accordion-header .acc-icon{
+  font-size:0.8rem;color:var(--slate-400);
+  transition:transform 0.3s;
+}
+.accordion.open .acc-icon{transform:rotate(180deg)}
+.accordion-body{
+  max-height:0;overflow:hidden;
+  transition:max-height 0.4s ease;
+  background:#fff;border-radius:0 0 var(--radius) var(--radius);
+}
+.accordion.open .accordion-body{max-height:600px}
+.accordion-body-inner{
+  padding:0 24px 20px;font-size:0.88rem;color:var(--slate-500);line-height:1.8;
+  border:1px solid var(--slate-200);border-top:none;border-radius:0 0 var(--radius) var(--radius);
+}
+
+/* ---- HIGHLIGHT BOX ---- */
+.highlight{
+  background:var(--blue-light);border:1px solid rgba(37,99,235,0.2);
+  border-radius:var(--radius);padding:20px 28px;
+  font-size:0.95rem;color:var(--blue-dark);line-height:1.7;
+}
+.highlight.green{background:var(--green-light);border-color:rgba(5,150,105,0.2);color:var(--green-dark)}
+.highlight.red{background:var(--red-light);border-color:rgba(220,38,38,0.2);color:var(--red-dark)}
+.highlight.amber{background:var(--amber-light);border-color:rgba(217,119,6,0.2);color:var(--amber-dark)}
+
+/* ---- TABLE ---- */
+.table-responsive{overflow-x:auto;border-radius:var(--radius-lg);border:1px solid var(--slate-200)}
+.styled-table{width:100%;border-collapse:collapse;font-size:0.9rem}
+.styled-table thead{background:var(--slate-50)}
+.styled-table th{
+  padding:14px 18px;text-align:left;font-weight:700;
+  color:var(--slate-600);font-size:0.8rem;letter-spacing:0.5px;
+  border-bottom:2px solid var(--slate-200);
+}
+.styled-table td{
+  padding:14px 18px;border-bottom:1px solid var(--slate-100);
+  color:var(--slate-600);line-height:1.6;
+}
+.styled-table tbody tr{transition:background 0.2s}
+.styled-table tbody tr:hover{background:var(--slate-50)}
+.styled-table .row-label{font-weight:700;color:var(--slate-800)}
+
+/* ---- COMPARISON ---- */
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.compare-card{
+  background:#fff;border-radius:var(--radius-lg);
+  padding:32px;border:1px solid var(--slate-200);
+  box-shadow:var(--shadow-sm);
+  transition:all 0.3s ease;
+}
+.compare-card:hover{box-shadow:var(--shadow-lg)}
+.compare-card .cmp-header{
+  display:flex;align-items:center;gap:12px;margin-bottom:16px;
+}
+.compare-card .cmp-badge{
+  padding:4px 14px;border-radius:12px;font-size:0.75rem;
+  font-weight:700;color:#fff;
+}
+.cmp-badge.danger{background:var(--red)}
+.cmp-badge.safe{background:var(--green)}
+
+/* ---- COMPLIANCE CARDS ---- */
+.compliance-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.compliance-card{
+  background:#fff;border-radius:var(--radius-lg);
+  padding:40px 32px;text-align:center;
+  border:1px solid var(--slate-200);
+  box-shadow:var(--shadow-sm);
+  transition:all 0.35s ease;
+}
+.compliance-card:hover{
+  box-shadow:var(--shadow-xl);
+  transform:translateY(-6px);
+}
+.compliance-card .cc-icon{
+  width:72px;height:72px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:32px;margin:0 auto 20px;
+  transition:transform 0.3s;
+}
+.compliance-card:hover .cc-icon{transform:scale(1.1)}
+.compliance-card.pro .cc-icon{background:var(--blue-light);color:var(--blue)}
+.compliance-card.org .cc-icon{background:var(--green-light);color:var(--green)}
+.compliance-card.user .cc-icon{background:var(--red-light);color:var(--red)}
+.compliance-card h3{font-size:1.15rem;font-weight:700;color:var(--slate-800);margin-bottom:16px}
+.compliance-card ul{list-style:none;text-align:left;padding:0}
+.compliance-card li{
+  padding:8px 0;font-size:0.88rem;color:var(--slate-500);
+  border-bottom:1px solid var(--slate-100);
+  display:flex;align-items:center;gap:8px;
+}
+.compliance-card li::before{content:'✓';color:var(--green);font-weight:700}
+
+/* ---- FOOTER ---- */
+.footer{
+  text-align:center;padding:80px 48px 60px;
+  background:#fff;border-top:1px solid var(--slate-200);
+}
+.footer h2{font-size:2rem;font-weight:800;color:var(--slate-900);margin-bottom:8px}
+.footer p{color:var(--slate-400);font-size:1rem}
+
+/* ---- BACK TO TOP ---- */
+.back-top{
+  position:fixed;bottom:32px;right:32px;z-index:99;
+  width:44px;height:44px;border-radius:50%;
+  background:var(--blue);color:#fff;border:none;
+  cursor:pointer;font-size:1.2rem;
+  box-shadow:var(--shadow-lg);
+  opacity:0;transform:translateY(20px);
+  transition:all 0.3s;
+  display:flex;align-items:center;justify-content:center;
+}
+.back-top.show{opacity:1;transform:translateY(0)}
+.back-top:hover{background:var(--blue-dark);transform:translateY(-3px)}
+
+/* ---- RESPONSIVE ---- */
+@media(max-width:900px){
+  .grid2,.grid3,.grid4,.stat-grid,.compliance-grid,.compare-grid{grid-template-columns:1fr}
+  .top-nav{padding:0 16px}
+  .top-nav .nav-links{display:none}
+  .hero h1{font-size:2rem}
+  .section{padding:60px 20px}
+  .flow{flex-direction:column}
+  .flow-arrow{transform:rotate(90deg)}
+  .side-dots{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ====== TOP NAV ====== -->
+<nav class="top-nav">
+  <div class="logo">⚖️ 第285条研究 <span>信息安全</span></div>
+  <ul class="nav-links">
+    <li><a href="#bg">背景</a></li>
+    <li><a href="#clause">法条解读</a></li>
+    <li><a href="#case">案例分析</a></li>
+    <li><a href="#compliance">合规路径</a></li>
+    <li><a href="#summary">总结</a></li>
+  </ul>
+</nav>
+
+<!-- ====== SIDE DOTS ====== -->
+<nav class="side-dots">
+  <a href="#hero" class="active" title="首页"></a>
+  <a href="#bg" title="背景"></a>
+  <a href="#clause" title="法条"></a>
+  <a href="#case" title="案例"></a>
+  <a href="#compliance" title="合规"></a>
+  <a href="#summary" title="总结"></a>
+</nav>
+
+<!-- ====== HERO ====== -->
+<section class="hero fade-up" id="hero">
+  <div class="hero-content">
+    <div class="hero-badge">信息安全法规与安全管理 · 综合作业报告</div>
+    <h1>
+      非法侵入计算机信息系统<br>
+      <span class="accent">罪名合规分析</span>与案例研究
+    </h1>
+    <p class="hero-sub">《中华人民共和国刑法》第285条解读及典型案例分析</p>
+    <p class="hero-info">信息安全1班 · 张鹏 &nbsp;|&nbsp; 于子隽</p>
+  </div>
+  <div class="scroll-hint">
+    <span>向下滚动探索</span>
+    <span class="arrow">↓</span>
+  </div>
+</section>
+
+<!-- ====== SECTION 1: BACKGROUND ====== -->
+<section class="section" id="bg">
+  <div class="section-header fade-up">
+    <span class="tag" style="background:var(--blue-light);color:var(--blue)">Part 1</span>
+    <h2>选题背景与法条概览</h2>
+    <p>在数字化时代，计算机信息系统已深度融入国家事务、国防建设与公民生活。非法侵入、数据窃取等网络犯罪频发，严重威胁国家安全与个人隐私。</p>
+  </div>
+
+  <!-- 三张卡片 -->
+  <div class="grid3 fade-up delay-1">
+    <div class="card accent-blue">
+      <div class="card-icon" style="background:var(--blue-light);color:var(--blue)">🏗️</div>
+      <h3>数字化核心载体</h3>
+      <p>计算机信息系统已渗透至国家事务决策、国防保障、尖端科技、企业运营及公民生活，是现代社会运转的<strong>核心基础设施</strong>。一旦遭受攻击，损失不可估量。</p>
+    </div>
+    <div class="card accent-red">
+      <div class="card-icon" style="background:var(--red-light);color:var(--red)">⚠️</div>
+      <h3>非法入侵的多重危害</h3>
+      <p>数据窃取、恶意控制等攻击行为直接泄露国家机密与商业敏感信息，破坏系统正常运行。每一条泄露的个人信息，都可能是电信诈骗、骚扰的源头。</p>
+    </div>
+    <div class="card accent-green">
+      <div class="card-icon" style="background:var(--green-light);color:var(--green)">⚖️</div>
+      <h3>筑牢技术法律边界</h3>
+      <p>作为信息安全专业学生，渗透测试、安全运维等工作必须清晰认知<strong>技术行为的法律边界</strong>。技术能力是保护的工具，而非攻击的武器。</p>
+    </div>
+  </div>
+
+  <!-- 核心宗旨 -->
+  <div class="highlight fade-up delay-2" style="margin-top:32px;text-align:center;font-size:1.05rem;">
+    <strong>🛡️ 核心宗旨：</strong>以技术守护安全，以法律规范行为，做负责任的信息安全守护者。
+  </div>
+</section>
+
+<!-- ====== SECTION 1B: 285 OVERVIEW ====== -->
+<section class="section" style="padding-top:0;">
+  <div class="section-header fade-up">
+    <h2>《刑法》第285条：全链条刑事规制体系</h2>
+    <p>三款条文层层递进，构建了"侵入行为 → 数据获取/控制 → 工具供给打击"的严密法网。</p>
+  </div>
+
+  <!-- 流程图 -->
+  <div class="flow fade-up delay-1">
+    <div class="flow-step">
+      <div class="step-num">第1款</div>
+      <div class="step-title">特殊领域侵入</div>
+      <div class="step-sub">行为犯 · 无需后果</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="step-num">第2款</div>
+      <div class="step-title">数据获取与控制</div>
+      <div class="step-sub">情节犯 · 需情节严重</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="step-num">第3款</div>
+      <div class="step-title">工具供给打击</div>
+      <div class="step-sub">帮助行为正犯化</div>
+    </div>
+  </div>
+
+  <div class="highlight fade-up delay-2" style="margin-top:32px;">
+    <strong>📐 规制闭环：</strong>从"非法侵入行为实施"到"数据窃取与系统控制"再到"黑客工具供给源头打击"，三款条文实现了对网络入侵犯罪<strong>全链条、无死角</strong>的刑事规制，为司法实践提供清晰的定罪量刑依据。
+  </div>
+
+  <!-- 研究价值 -->
+  <div class="stat-grid fade-up delay-3" style="margin-top:40px;">
+    <div class="stat-card blue">
+      <div class="stat-bg">📚</div>
+      <div class="stat-num">学术</div>
+      <div class="stat-label">解读构成要件与量刑标准<br>梳理法律条文逻辑脉络</div>
+    </div>
+    <div class="stat-card green">
+      <div class="stat-bg">🔍</div>
+      <div class="stat-num">实践</div>
+      <div class="stat-label">结合真实司法判例<br>厘清"可为"与"不可为"</div>
+    </div>
+    <div class="stat-card amber">
+      <div class="stat-bg">🛡️</div>
+      <div class="stat-num">合规</div>
+      <div class="stat-label">从业者·企业·用户<br>定制化风险防范方案</div>
+    </div>
+    <div class="stat-card red">
+      <div class="stat-bg">⚡</div>
+      <div class="stat-num">警示</div>
+      <div class="stat-label">以案释法划红线<br>避免"不懂法"而触犯刑法</div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== SECTION 2: CLAUSE ANALYSIS ====== -->
+<section class="section" id="clause" style="background:#fff;margin:0;max-width:100%;padding:100px 0;">
+<div style="max-width:1100px;margin:0 auto;padding:0 48px;">
+  <div class="section-header fade-up">
+    <span class="tag" style="background:var(--green-light);color:var(--green)">Part 2</span>
+    <h2>法条核心条款深度解读</h2>
+    <p>对《刑法》第285条三款逐款分析犯罪客体、客观方面、主体、主观方面及量刑标准。</p>
+  </div>
+
+  <!-- ====== TAB SYSTEM ====== -->
+  <div class="fade-up delay-1">
+    <div class="tab-nav">
+      <button class="tab-btn active" onclick="switchTab(0)">第1款 · 非法侵入</button>
+      <button class="tab-btn" onclick="switchTab(1)">第2款 · 获取/控制</button>
+      <button class="tab-btn" onclick="switchTab(2)">第3款 · 提供工具</button>
+    </div>
+
+    <!-- Tab 0: 第1款 -->
+    <div class="tab-panel active" id="tab0">
+      <div class="compare-grid">
+        <div>
+          <div class="card accent-blue">
+            <h3>🎯 保护对象</h3>
+            <p>国家事务、国防建设、尖端科学技术领域的计算机信息系统。这三个领域关乎国家命脉，因此刑法给予<strong>最高级别的严格保护</strong>。</p>
+          </div>
+          <div class="card accent-blue">
+            <h3>🔓 行为特征</h3>
+            <p>违反国家规定，未经授权或超越授权，突破安全防护措施进入系统。无论是否造成实际损害，<strong>只要侵入即构成犯罪</strong>——因此称为"行为犯"。</p>
+          </div>
+        </div>
+        <div>
+          <div class="card accent-blue">
+            <h3>⚖️ 构成要件</h3>
+            <p>犯罪主体：年满16周岁自然人或单位<br>主观方面：故意（过失不构成本罪）<br>客观方面：实施了非法侵入行为<br>犯罪客体：三大领域系统安全</p>
+          </div>
+          <div class="highlight">
+            <strong>📏 量刑标准：</strong>三年以下有期徒刑或拘役。<br>本款设立最低入罪门槛，无需造成实际后果即可定罪，体现了刑法对国家核心利益的<strong>优先保护</strong>。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab 1: 第2款 -->
+    <div class="tab-panel" id="tab1">
+      <div class="card accent-green" style="margin-bottom:20px;">
+        <h3>📋 保护范围</h3>
+        <p>涵盖企业、事业单位、个人所有非特定领域的计算机信息系统。这意味着<strong>电商平台、社交网络、企业ERP、甚至个人电脑</strong>都在保护范围内。</p>
+      </div>
+      <div class="grid2">
+        <div class="card accent-green">
+          <h3>行为一：非法获取数据</h3>
+          <p>侵入系统后获取账号密码、商业秘密、个人信息、源代码等数据。根据司法解释，获取身份认证信息<strong>500组以上</strong>即属"情节严重"。</p>
+        </div>
+        <div class="card accent-green">
+          <h3>行为二：非法控制系统</h3>
+          <p>采用技术手段非法控制计算机信息系统，如植入后门、组建僵尸网络、发动DDoS攻击等。控制<strong>20台以上</strong>系统即属"情节严重"。</p>
+        </div>
+      </div>
+      <div class="highlight green" style="margin-top:20px;">
+        <strong>📏 量刑：</strong>情节严重 → 3年以下有期徒刑或拘役+罚金；<br>情节特别严重（如违法所得2.5万元以上/信息2500组以上） → 3-7年有期徒刑+罚金。
+      </div>
+    </div>
+
+    <!-- Tab 2: 第3款 -->
+    <div class="tab-panel" id="tab2">
+      <div class="grid2">
+        <div>
+          <div class="card accent-amber">
+            <h3>🎯 规制对象</h3>
+            <p>涵盖工具开发者、程序提供者、非法软件售卖者。即使你自己从未侵入任何系统，只要<strong>提供了专门用于侵入的工具</strong>，就可能构成本罪。</p>
+          </div>
+          <div class="card accent-amber">
+            <h3>情形一：提供专用工具</h3>
+            <p>提供专门用于侵入/控制的程序工具：木马、病毒、撞库软件、漏洞利用程序、破解工具等。<strong>工具的性质决定行为的性质</strong>。</p>
+          </div>
+        </div>
+        <div>
+          <div class="card accent-amber">
+            <h3>情形二：明知故犯供给</h3>
+            <p>明知他人实施侵入、非法控制计算机信息系统的违法犯罪行为，仍为其提供工具支持。司法实践中，<strong>工具明显只能用于犯罪</strong>的，通常推定提供者"明知"。</p>
+          </div>
+          <div class="highlight amber">
+            <strong>📏 量刑等同第2款：</strong>将帮助犯和预备行为<strong>正犯化</strong>，有效切断网络犯罪的技术源头。这是刑法打击链条的<strong>上游延伸</strong>。
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ====== SECTION 3: CASE STUDY ====== -->
+<section class="section" id="case">
+  <div class="section-header fade-up">
+    <span class="tag" style="background:var(--red-light);color:var(--red)">Part 3</span>
+    <h2>典型案例深度分析</h2>
+    <p>张某非法获取计算机信息系统数据案——一个资深程序员如何从技术精英沦为阶下囚。</p>
+  </div>
+
+  <!-- 数据冲击 -->
+  <div class="stat-grid fade-up delay-1">
+    <div class="stat-card red">
+      <div class="stat-bg">📊</div>
+      <div><span class="stat-num" data-count="100000">0</span><span class="stat-unit">+</span></div>
+      <div class="stat-label">窃取公民信息条数</div>
+    </div>
+    <div class="stat-card amber">
+      <div class="stat-bg">💰</div>
+      <div><span class="stat-num" data-count="200000">0</span><span class="stat-unit">元</span></div>
+      <div class="stat-label">违法所得</div>
+    </div>
+    <div class="stat-card red">
+      <div class="stat-bg">⚖️</div>
+      <div><span class="stat-num" data-count="4">0</span><span class="stat-unit">年</span></div>
+      <div class="stat-label">有期徒刑</div>
+    </div>
+    <div class="stat-card blue">
+      <div class="stat-bg">💸</div>
+      <div><span class="stat-num" data-count="50000">0</span><span class="stat-unit">元</span></div>
+      <div class="stat-label">罚金</div>
+    </div>
+  </div>
+
+  <!-- 交互式时间线 -->
+  <div class="fade-up delay-2" style="margin-top:48px;">
+    <h3 style="text-align:center;color:var(--slate-800);margin-bottom:32px;">📋 作案全过程还原 <span style="font-size:0.75rem;color:var(--slate-400);">（点击每一步查看详情）</span></h3>
+    <div class="timeline-interactive">
+      <div class="timeline-track"></div>
+
+      <div class="timeline-node active" onclick="toggleTimeline(this)">
+        <div class="tn-header"><span class="tn-badge">Step 1</span><span class="tn-title">编写攻击工具</span></div>
+        <div class="tn-body">
+          <p>张某系资深互联网从业人员，具备极强的计算机操作能力和底层网络技术基础。其自行编写<strong>自动化批量验证程序</strong>，集成撞库模块、漏洞利用模块和自动抓取模块，为后续犯罪做好准备。该工具本身即是第285条第3款所禁止的"专门用于侵入的程序"。</p>
+        </div>
+      </div>
+
+      <div class="timeline-node" onclick="toggleTimeline(this)">
+        <div class="tn-header"><span class="tn-badge">Step 2</span><span class="tn-title">撞库入侵多个平台</span></div>
+        <div class="tn-body">
+          <p>利用电商及社交平台的登录与接口漏洞，采用<strong>"撞库+漏洞利用"组合手段</strong>——先通过已泄露的账号密码库进行批量登录尝试，再针对特定接口漏洞绕过安全防护措施，成功非法侵入多个主流平台的计算机信息系统。</p>
+        </div>
+      </div>
+
+      <div class="timeline-node" onclick="toggleTimeline(this)">
+        <div class="tn-header"><span class="tn-badge">Step 3</span><span class="tn-title">窃取海量个人信息</span></div>
+        <div class="tn-body">
+          <p>侵入系统后，通过程序自动抓取公民个人信息<strong>十万余条</strong>，涵盖：<span class="tn-dot red"></span>账号密码 <span class="tn-dot amber"></span>手机号码 <span class="tn-dot green"></span>电子邮箱 <span class="tn-dot red"></span>收货地址等核心隐私数据，涉及多家国内主流电商与社交平台。</p>
+        </div>
+      </div>
+
+      <div class="timeline-node" onclick="toggleTimeline(this)">
+        <div class="tn-header"><span class="tn-badge">Step 4</span><span class="tn-title">暗网转售牟利</span></div>
+        <div class="tn-body">
+          <p>将窃取信息整理分类后，通过<strong>暗网、即时通讯群组</strong>等隐秘渠道多次向第三方转售，非法获利共计<strong>人民币二十余万元</strong>。这些被倒卖的信息极易被用于电信诈骗、精准营销骚扰等下游犯罪，社会危害性极大。</p>
+        </div>
+      </div>
+
+      <div class="timeline-node" onclick="toggleTimeline(this)">
+        <div class="tn-header"><span class="tn-badge">Step 5</span><span class="tn-title">法网恢恢，严惩不贷</span></div>
+        <div class="tn-body">
+          <p>公安机关立案侦查，扣押涉案电子设备与作案工具。检察机关以<strong>"非法获取计算机信息系统数据罪"</strong>提起公诉。法院审理认定：违法所得高、信息数量巨大，属<strong>情节特别严重</strong>。最终判决：<strong>有期徒刑四年 + 罚金五万元 + 全额追缴违法所得二十余万元</strong>。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 案例启示：正反对比 -->
+  <div class="compare-grid fade-up delay-3" style="margin-top:48px;">
+    <div class="compare-card">
+      <div class="cmp-header">
+        <span class="cmp-badge danger">❌ 张某的选择</span>
+      </div>
+      <ul style="list-style:none;color:var(--slate-500);font-size:0.9rem;line-height:2.2;">
+        <li>🔴 将技术用于违法获利</li>
+        <li>🔴 编写自动化撞库攻击工具</li>
+        <li>🔴 窃取十万余条公民信息</li>
+        <li>🔴 暗网转售谋取暴利</li>
+        <li>🔴 <strong>结局：有期徒刑四年</strong></li>
+      </ul>
+    </div>
+    <div class="compare-card">
+      <div class="cmp-header">
+        <span class="cmp-badge safe">✅ 正确的道路</span>
+      </div>
+      <ul style="list-style:none;color:var(--slate-500);font-size:0.9rem;line-height:2.2;">
+        <li>🟢 技术能力用于安全防护</li>
+        <li>🟢 获得授权后开展渗透测试</li>
+        <li>🟢 发现漏洞通过合法渠道报告</li>
+        <li>🟢 参与漏洞赏金计划（合规）</li>
+        <li>🟢 <strong>成果：受人尊敬的安全专家</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 四个启示 -->
+  <div class="grid4 fade-up delay-4" style="margin-top:32px;">
+    <div class="card accent-red" style="text-align:center;">
+      <div style="font-size:2rem;margin-bottom:8px;">⚡</div>
+      <h3 style="font-size:0.95rem;">技术≠免罪金牌</h3>
+      <p style="font-size:0.82rem;">"我不懂法"不是理由，专业人员更应明晰法律边界</p>
+    </div>
+    <div class="card accent-amber" style="text-align:center;">
+      <div style="font-size:2rem;margin-bottom:8px;">🔒</div>
+      <h3 style="font-size:0.95rem;">普通系统同样受保护</h3>
+      <p style="font-size:0.82rem;">电商、社交平台等非特殊系统也受刑法严格保护</p>
+    </div>
+    <div class="card accent-green" style="text-align:center;">
+      <div style="font-size:2rem;margin-bottom:8px;">📐</div>
+      <h3 style="font-size:0.95rem;">情节严重即构罪</h3>
+      <p style="font-size:0.82rem;">违法所得5000元以上或信息500组以上即达门槛</p>
+    </div>
+    <div class="card accent-blue" style="text-align:center;">
+      <div style="font-size:2rem;margin-bottom:8px;">🎯</div>
+      <h3 style="font-size:0.95rem;">三者兼备方为合格</h3>
+      <p style="font-size:0.82rem;">懂技术 · 守法律 · 有底线，缺一不可</p>
+    </div>
+  </div>
+</section>
+
+<!-- ====== SECTION 4: COMPLIANCE ====== -->
+<section class="section" id="compliance" style="background:#fff;margin:0;max-width:100%;padding:100px 0;">
+<div style="max-width:1100px;margin:0 auto;padding:0 48px;">
+  <div class="section-header fade-up">
+    <span class="tag" style="background:var(--amber-light);color:var(--amber)">Part 4</span>
+    <h2>合规路径与风险防范</h2>
+    <p>基于法条解读与案例教训，为三类核心主体提供可落地的合规建议。</p>
+  </div>
+
+  <div class="compliance-grid fade-up delay-1">
+    <div class="compliance-card pro">
+      <div class="cc-icon">👨‍💻</div>
+      <h3>网络安全从业者</h3>
+      <ul>
+        <li>坚持"授权在先"原则</li>
+        <li>获取书面授权后再测试</li>
+        <li>不开发、传播犯罪工具</li>
+        <li>严守职业道德底线</li>
+        <li>定期参加法律法规培训</li>
+        <li>漏洞通过合法渠道报告</li>
+      </ul>
+    </div>
+    <div class="compliance-card org">
+      <div class="cc-icon">🏢</div>
+      <h3>企业主体</h3>
+      <ul>
+        <li>强化系统纵深防御体系</li>
+        <li>完善数据分级分类管理</li>
+        <li>规范第三方安全合作</li>
+        <li>建立安全合规审查机制</li>
+        <li>制定数据安全应急预案</li>
+        <li>定期开展攻防演练</li>
+      </ul>
+    </div>
+    <div class="compliance-card user">
+      <div class="cc-icon">👤</div>
+      <h3>普通用户群体</h3>
+      <ul>
+        <li>不侵入他人信息系统</li>
+        <li>不使用、传播黑客工具</li>
+        <li>加强个人信息保护意识</li>
+        <li>使用强密码+多因素认证</li>
+        <li>发现违法及时举报</li>
+        <li>不点击可疑链接/附件</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- FAQ Accordion -->
+  <div class="fade-up delay-2" style="margin-top:48px;">
+    <h3 style="text-align:center;color:var(--slate-800);margin-bottom:24px;">❓ 常见法律边界问题</h3>
+
+    <div class="accordion" onclick="toggleAccordion(this)">
+      <div class="accordion-header">
+        <span>Q1: 白帽黑客的渗透测试如何避免违法？</span>
+        <span class="acc-icon">▼</span>
+      </div>
+      <div class="accordion-body">
+        <div class="accordion-body-inner">
+          <strong>三个必要条件：</strong><br>
+          ① <strong>书面授权</strong>——口头承诺不具备法律效力，必须签署正式的渗透测试授权协议，明确测试范围、时间窗口和允许的操作；<br>
+          ② <strong>范围限定</strong>——测试行为不得超出授权范围，超出授权边界的操作可能构成非法侵入；<br>
+          ③ <strong>数据保护</strong>——测试过程中接触到的任何数据不得复制、传播或用于授权外的目的。
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion" onclick="toggleAccordion(this)">
+      <div class="accordion-header">
+        <span>Q2: 开发安全测试工具（如Metasploit模块）本身违法吗？</span>
+        <span class="acc-icon">▼</span>
+      </div>
+      <div class="accordion-body">
+        <div class="accordion-body-inner">
+          工具本身<strong>不违法</strong>，但若<strong>明知他人将用于违法犯罪仍提供</strong>，则可能触犯第285条第3款。建议：① 做好用途限制声明；② 控制传播范围；③ 不针对国内系统开发专门的攻击工具。关键在于<strong>工具用途的主观认知和客观传播方式</strong>。
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion" onclick="toggleAccordion(this)">
+      <div class="accordion-header">
+        <span>Q3: 发现漏洞后未经授权就测试了怎么办？</span>
+        <span class="acc-icon">▼</span>
+      </div>
+      <div class="accordion-body">
+        <div class="accordion-body-inner">
+          <strong>三步应急措施：</strong><br>
+          ① <strong>立即停止</strong>——不要再进行任何进一步的测试或利用；<br>
+          ② <strong>不传播</strong>——不要将漏洞信息对外公开或分享；<br>
+          ③ <strong>合法报告</strong>——通过国家信息安全漏洞共享平台（CNVD）或国家信息安全漏洞库（CNNVD）等官方渠道报告漏洞。擅自公开可能面临法律风险。
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion" onclick="toggleAccordion(this)">
+      <div class="accordion-header">
+        <span>Q4: 第285条与《网络安全法》《数据安全法》的关系？</span>
+        <span class="acc-icon">▼</span>
+      </div>
+      <div class="accordion-body">
+        <div class="accordion-body-inner">
+          <strong>三位一体的法律保护体系：</strong><br>
+          ① 《刑法》第285条——<strong>事后惩罚</strong>：对已发生的网络犯罪进行刑事追诉；<br>
+          ② 《网络安全法》第27条——<strong>行为禁止</strong>：明确禁止非法侵入、干扰、破坏网络；<br>
+          ③ 《数据安全法》（2021年施行）——<strong>事前预防</strong>：要求企业建立全流程数据安全管理制度。三者共同构成<strong>事前预防→行为禁止→事后惩罚</strong>的完整法律屏障。
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ====== SECTION 5: SUMMARY ====== -->
+<section class="section" id="summary">
+  <div class="section-header fade-up">
+    <span class="tag" style="background:var(--green-light);color:var(--green)">Conclusion</span>
+    <h2>总结与体会</h2>
+    <p>将技术能力与法律意识相结合，实现安全与合规的双重保障。</p>
+  </div>
+
+  <!-- 核心回顾 -->
+  <div class="flow fade-up delay-1" style="margin-bottom:32px;">
+    <div class="flow-step" style="border-top:3px solid var(--red);">
+      <div class="step-num">行为实施</div>
+      <div class="step-title">非法侵入</div>
+      <div class="step-sub">第285条第1款</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step" style="border-top:3px solid var(--amber);">
+      <div class="step-num">结果获取</div>
+      <div class="step-title">获取数据/非法控制</div>
+      <div class="step-sub">第285条第2款</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step" style="border-top:3px solid var(--green);">
+      <div class="step-num">源头治理</div>
+      <div class="step-title">打击工具供给</div>
+      <div class="step-sub">第285条第3款</div>
+    </div>
+  </div>
+  <p style="text-align:center;color:var(--blue);font-weight:600;font-size:0.9rem;margin-bottom:32px;">《刑法》第285条 · 全链条刑事规制闭环</p>
+
+  <!-- 关键结论卡片 -->
+  <div class="grid3 fade-up delay-2">
+    <div class="card accent-blue" style="text-align:center;">
+      <div style="font-size:2.5rem;margin-bottom:12px;">📖</div>
+      <h3>知法</h3>
+      <p>系统学习《刑法》《网络安全法》《数据安全法》《个人信息保护法》等信息安全相关法规，理解每一部法律的规制对象和适用范围。</p>
+    </div>
+    <div class="card accent-green" style="text-align:center;">
+      <div style="font-size:2.5rem;margin-bottom:12px;">🧠</div>
+      <h3>懂法</h3>
+      <p>深入理解法律条文背后保护的法益——国家安全、商业利益、公民隐私，把握法条的价值取向和立法逻辑。</p>
+    </div>
+    <div class="card accent-red" style="text-align:center;">
+      <div style="font-size:2.5rem;margin-bottom:12px;">🛡️</div>
+      <h3>守法</h3>
+      <p>将法律意识内化为职业行为准则。每一次渗透测试、每一个工具开发、每一条数据处理，都在法律框架下审慎进行。</p>
+    </div>
+  </div>
+
+  <div class="highlight fade-up delay-3" style="margin-top:32px;text-align:center;font-size:1.05rem;">
+    <strong>💡 核心结论：</strong>网络空间不是法外之地，技术发展不能脱离法律约束。<br>作为信息安全专业学生，<strong style="color:var(--blue);">知法、懂法、守法</strong>，将技术能力与法律意识相结合，方能成为真正合格的信息安全守护者。
+  </div>
+</section>
+
+<!-- ====== FOOTER ====== -->
+<footer class="footer fade-up">
+  <div style="font-size:3rem;margin-bottom:16px;">⚖️</div>
+  <h2>感谢聆听 · 敬请指正</h2>
+  <p style="color:var(--slate-400);margin-top:8px;">以技术守护安全 · 以法律规范行为</p>
+  <p style="color:var(--slate-300);font-size:0.85rem;margin-top:24px;">信息安全1班 · 张鹏 &nbsp;|&nbsp; 于子隽</p>
+</footer>
+
+<!-- ====== BACK TO TOP ====== -->
+<button class="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="回到顶部">↑</button>
+
+<script>
+/* ================================================================
+   INTERSECTION OBSERVER — scroll-triggered animations
+   ================================================================ */
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      // Animate counters when visible
+      const counters = entry.target.querySelectorAll('.stat-num[data-count]');
+      counters.forEach(c => animateCounter(c));
+    }
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.fade-up, .fade-left, .fade-right, .scale-in').forEach(el => observer.observe(el));
+
+/* ---- COUNTER ANIMATION ---- */
+function animateCounter(el) {
+  if (el.dataset.animated) return;
+  el.dataset.animated = '1';
+  const target = parseInt(el.dataset.count);
+  const duration = 1500;
+  const start = performance.now();
+  function tick(now) {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    // ease-out
+    const eased = 1 - Math.pow(1 - progress, 3);
+    const current = Math.round(target * eased);
+    if (target >= 1000) {
+      el.textContent = current.toLocaleString();
+    } else {
+      el.textContent = current;
+    }
+    if (progress < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+/* ---- TAB SWITCH ---- */
+function switchTab(idx) {
+  document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', i===idx));
+  document.querySelectorAll('.tab-panel').forEach((p,i) => p.classList.toggle('active', i===idx));
+}
+
+/* ---- TIMELINE CLICK ---- */
+function toggleTimeline(node) {
+  // Close all others
+  document.querySelectorAll('.timeline-node').forEach(n => {
+    if (n !== node) n.classList.remove('active');
+  });
+  node.classList.toggle('active');
+}
+
+/* ---- ACCORDION ---- */
+function toggleAccordion(acc) {
+  acc.classList.toggle('open');
+}
+
+/* ---- BACK TO TOP ---- */
+const backTop = document.querySelector('.back-top');
+window.addEventListener('scroll', () => {
+  backTop.classList.toggle('show', window.scrollY > 600);
+});
+
+/* ---- SIDE DOTS ACTIVE TRACKING ---- */
+const dots = document.querySelectorAll('.side-dots a');
+const sections = ['hero','bg','clause','case','compliance','summary'].map(id => document.getElementById(id));
+window.addEventListener('scroll', () => {
+  let current = 'hero';
+  sections.forEach(sec => {
+    if (sec && window.scrollY >= sec.offsetTop - 300) current = sec.id;
+  });
+  dots.forEach(d => d.classList.toggle('active', d.getAttribute('href') === '#'+current));
+});
+
+/* ---- TOP NAV ACTIVE ---- */
+const navLinks = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+  let current = 'hero';
+  sections.forEach(sec => {
+    if (sec && window.scrollY >= sec.offsetTop - 120) current = sec.id;
+  });
+  navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#'+current));
+});
+</script>
+</body>
+</html>
