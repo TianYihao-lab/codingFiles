@@ -21,14 +21,17 @@ void test02(){
     char ch=getchar(); // ch=getche()
 
     while (getchar() != '\n');
-    
+
     // gets函数 用来读取一个字符串
     char str[100];
     gets(str);
     // 使用gets()函数可以读取带有空格的字符串
 
     printf("你输入的字符是：%c\n", ch);
+    putchar(ch); // putchar()函数用来输出一个字符
     printf("你输入的字符串是：%s\n", str);
+    puts(str); // puts()函数用来输出一个字符串，并在字符串末尾自动添加换行符
+    
 }
 
 int main(){
