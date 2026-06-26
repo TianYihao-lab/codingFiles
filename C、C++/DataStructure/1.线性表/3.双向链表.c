@@ -14,7 +14,7 @@ typedef struct ListNode* Node;
 
 
 void initList(Node node);		//链表的初始化
-bool insertList(Node node, int index, E e);	// 按照位序插入元素
+bool insertList(Node node, int index, E e);		// 按照位序插入元素
 bool deleteList(Node node, int index);			// 删除元素
 E* getList(Node node, int index);				// 查找1:按位查找，返回节点信息
 int findList(Node node, E e);					// 查找2:按值查找，返回节点位置
@@ -42,7 +42,7 @@ void test02() {
 		insertList(&node, i, i + 100);
 	}
 	deleteList(&node, 2);
-	printListf(&node);
+	printList(&node);
 }
 
 int main() {
