@@ -8,22 +8,20 @@ typedef struct ListNode{
 	struct ListNode *next;
 } ListNode, *Node;
 
-void initList(Node node);	//链表的初始化
+
+void initList(Node node);		//链表的初始化
 _Bool insertList(Node node, E e, int index);	// 按照位序插入元素
 _Bool deleteList(Node node, int index);			// 删除元素
-E *getList(Node node, int index);				// 查找1:按位查找,返回节点信息			
+E *getList(Node node, int index);				// 查找1:按位查找，返回节点信息			
 int findList(Node node, E e);					// 查找2:按值查找，返回节点位置
-
-int sizeList(Node node);	// 求链表的长度
+int sizeList(Node node);		// 求链表的长度
 void printList(Node node);
 
 
-void test01()
-{
+void test01(){
 	ListNode node;
 	initList(&node);
-	for (int i = 1; i <= 3; i++)
-	{
+	for (int i = 1; i <= 3; i++){
 		insertList(&node, i, i);
 	}
 	printf("列表长度为:%d\n", sizeList(&node));
@@ -33,12 +31,10 @@ void test01()
 	printList(&node);
 }
 
-void test02()
-{
+void test02(){
 	ListNode node;
 	initList(&node);
-	for (int i = 1; i <= 3; i++)
-	{
+	for (int i = 1; i <= 3; i++){
 		insertList(&node, i, i);
 	}
 	printList(&node);
@@ -53,25 +49,25 @@ void test02()
 	printf("%d ", findList(&node, 3));
 }
 
-int main()
-{
+int main(){
 	test01();
 	// test02();
 	return 0;
 }
 
-void initList(Node node){ // 初始化链表
+// 初始化链表
+void initList(Node node){ 
 	node->next = NULL;
 	// 第一个节点叫做首节点，它没有element
 	node->element = 0; // 也可以初始化element成员为0
 }
 
-_Bool insertList(Node node, E e, int index){ // 在固定位置上插入元素e
+// 在固定位置上插入元素e
+_Bool insertList(Node node, E e, int index){ 
 	if (index < 1)
 		return 0; // 插入位置不合法（情况一）
 
-	while (--index)
-	{
+	while (--index){
 		node = node->next;
 		if (node == NULL)
 			return 0; // 插入位置不合法（情况二）
@@ -86,7 +82,8 @@ _Bool insertList(Node node, E e, int index){ // 在固定位置上插入元素e
 	return 1;
 }
 
-_Bool deleteList(Node node, int index){ // 删除规定位置上的元素
+// 删除规定位置上的元素
+_Bool deleteList(Node node, int index){ 
 	if (index < 1)
 		return 0;
 	while (--index)
@@ -103,7 +100,8 @@ _Bool deleteList(Node node, int index){ // 删除规定位置上的元素
 	return 1;
 }
 
-E *getList(Node node, int index){ // 找链表中第index个位置上的值
+// 找链表中第index个位置上的值
+E *getList(Node node, int index){ 
 
 	if (index < 1)
 		return 0;
@@ -138,7 +136,8 @@ E *getList(Node node, int index){ // 找链表中第index个位置上的值
 //	return &head->element;
 // }
 
-int findList(Node node, E e){ // 找链表中值为e的元素的下标
+// 找链表中值为e的元素的下标
+int findList(Node node, E e){ 
 	int cnt = 0;
 	while (node != NULL)
 	{
@@ -151,6 +150,7 @@ int findList(Node node, E e){ // 找链表中值为e的元素的下标
 	return -1;
 }
 
+
 int sizeList(Node node){
 	int cnt = 0; // 从0开始
 	while (node->next)
@@ -161,7 +161,8 @@ int sizeList(Node node){
 	return cnt;
 }
 
-void printList(Node node){	// 打印链表
+// 打印链表
+void printList(Node node){	
 	node = node->next; // 首节点不需要打印出来
 	while (node != NULL)
 	{

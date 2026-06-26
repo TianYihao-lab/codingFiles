@@ -9,9 +9,48 @@ struct ListNode {
 	struct ListNode* prev;
 	struct ListNode* next;
 };
-
 typedef struct ListNode LN;
 typedef struct ListNode* Node;
+
+
+void initList(Node node);		//链表的初始化
+bool insertList(Node node, int index, E e);	// 按照位序插入元素
+bool deleteList(Node node, int index);			// 删除元素
+E* getList(Node node, int index);				// 查找1:按位查找，返回节点信息
+int findList(Node node, E e);					// 查找2:按值查找，返回节点位置
+int sizeList(Node node);		// 求链表的长度
+void printList(Node node);		// 打印链表
+
+
+void test01() {
+	struct ListNode node;
+	initList(&node);
+	for (int i = 0;i < 6;i++) {
+		insertList(&node, i + 1, i + 100);
+	}
+	printList(&node);
+
+	printf("双向链表NodeList的长度为：%d\n", sizeList(&node));
+	printf("%d ", *getList(&node, 3));
+	printf("%d ", findList(&node, 201));
+	printf("%d", findList(&node, 102));
+}
+void test02() {
+	struct ListNode node;
+	initList(&node);
+	for (int i = 1;i <= 6;i++) {
+		insertList(&node, i, i + 100);
+	}
+	deleteList(&node, 2);
+	printListf(&node);
+}
+
+int main() {
+	test01();
+	//test02();
+	return 0;
+}
+
 
 void initList(Node node) {
 	node->element = 0;
@@ -79,14 +118,14 @@ int findList(Node node, E e) {
 	}
 	return -1;
 }
-void printListf(Node node) {    // ��������  
-	while (node->next != NULL) {    // �������
+void printListf(Node node) {    // 遍历链表  
+	while (node->next != NULL) {    // 正序遍历
 		printf("%d", node->next->element);
 		node = node->next;
 		if (node->next!= NULL)printf("->");
 	}puts("");
 
-	while (node->prev != NULL) {    // �������
+	while (node->prev != NULL) {    // 逆序遍历
 		printf("%d", node->element);
 		node = node->prev;
 		if (node->prev != NULL)printf("->");
@@ -99,33 +138,4 @@ int sizeList(Node node) {
 		cnt++;   
 	}
 	return cnt;
-}
-
-void test01() {
-	struct ListNode node;
-	initList(&node);
-	for (int i = 0;i < 6;i++) {
-		insertList(&node, i + 1, i + 100);
-	}
-	printListf(&node);
-
-	printf("˫������NodeList�ĳ���Ϊ��%d\n", sizeList(&node));
-	printf("%d ", *getList(&node, 3));
-	printf("%d ", findList(&node, 201));
-	printf("%d", findList(&node, 102));
-}
-void test02() {
-	struct ListNode node;
-	initList(&node);
-	for (int i = 1;i <= 6;i++) {
-		insertList(&node, i, i + 100);
-	}
-	deleteList(&node, 2);
-	printListf(&node);
-}
-
-int main() {
-	test01();
-	//test02();
-	return 0;
 }
